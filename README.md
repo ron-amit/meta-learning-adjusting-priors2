@@ -1,4 +1,4 @@
-# Implementation of the Meta-Learning-by-Adjusting-Priors algorithm in PyTorch
+# Implementation of the Meta-Learning-by-Adjusting-Priors algorithm in PyTorch 1.0
 
 
 
