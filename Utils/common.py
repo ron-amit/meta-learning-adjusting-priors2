@@ -123,19 +123,14 @@ def load_model_state(model, f_path):
 #     return total_norm
 
 
-
-
-def net_weights_magnitude(model, prm, p=2, exp_on_logs=True):
+def net_weights_magnitude(model, prm, p=2):   # corrected
     ''' Calculates the total p-norm of the weights  |W|_p^p
         If exp_on_logs flag is on, then parameters with log_var in their name are exponented'''
     total_mag = torch.zeros(1, device=prm.device, requires_grad=True)[0]
     for (param_name, param) in model.named_parameters():
-        if exp_on_logs and 'log_var' in param_name:
-            w = torch.exp(0.5*param)
-        else:
-            w = param
-        total_mag = total_mag + w.pow(p).sum()
+        total_mag = total_mag + param.pow(p).sum()
     return total_mag
+
 
 
 # -----------------------------------------------------------------------------------------------------------#
