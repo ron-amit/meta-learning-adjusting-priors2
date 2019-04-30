@@ -331,8 +331,9 @@ def reduce_train_set(train_dataset, limit_train_samples):
             train_dataset.train_labels = np.array(train_dataset.train_labels)[sampled_inds]
         else:
             sampled_inds = torch.randperm(n_train_samples_orig)[:limit_train_samples]
-            train_dataset.train_data = train_dataset.train_data[sampled_inds]
-            train_dataset.train_labels = train_dataset.train_labels[sampled_inds]
+            train_dataset = torch.utils.data.Subset(train_dataset, sampled_inds)
+            # train_dataset.train_data = train_dataset.train_data[sampled_inds]
+            # train_dataset.train_labels = train_dataset.train_labels[sampled_inds]
 
     return train_dataset
 # -----------------------------------------------------------------------------------------------------------#
