@@ -22,7 +22,7 @@ def get_hyper_divergnce(prm, prior_model):   # corrected
     kappa_post = prm.kappa_post
     kappa_prior = prm.kappa_prior
 
-    if prm.divergence_type == 'KL':
+    if not hasattr(prm, 'divergence_type') or prm.divergence_type == 'KL':
         # KLD between hyper-posterior and hyper-prior:
         norm_sqr = net_weights_magnitude(prior_model, prm, p=2)
         hyper_dvrg = (norm_sqr + kappa_post**2) / (2 * kappa_prior**2) + math.log(kappa_prior / kappa_post) - 1/2

@@ -199,10 +199,10 @@ def create_result_dir(prm, run_experiments=True):
 
     if run_experiments:
         # If run_name empty, set according to time
-        time_str = datetime.now().strftime(' %Y-%m-%d %H:%M:%S')
+        time_str = datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
         if prm.run_name == '':
             prm.run_name = time_str
-        prm.result_dir = os.path.join('saved', prm.run_name)
+        prm.result_dir = os.path.join(os.curdir, 'saved', prm.run_name)
         if not os.path.exists(prm.result_dir):
             os.makedirs(prm.result_dir)
         message = [
@@ -219,7 +219,7 @@ def create_result_dir(prm, run_experiments=True):
         # In this case just check if result dir exists and print the loaded parameters
         prm.result_dir = os.path.join('saved', prm.run_name)
         if not os.path.exists(prm.result_dir):
-            raise ValueError('Results dir not found:  ' +  prm.result_dir)
+            raise ValueError('Results dir not found:  ' + prm.result_dir)
         else:
             print('Run script: ' + sys.argv[0])
             print( 'Data loaded from: ' + prm.result_dir)
