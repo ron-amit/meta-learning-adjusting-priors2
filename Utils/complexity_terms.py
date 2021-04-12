@@ -138,7 +138,7 @@ def get_net_densities_divergence(prior_model, post_model, prm, noised_prior=Fals
         if hasattr(prior_layer, 'b'):
             total_dvrg += get_dvrg_element(post_layer.b, prior_layer.b, prm, noised_prior)
 
-    if prm.divergence_type == 'W_NoSqr':
+    if hasattr(prm, 'divergence_type') and prm.divergence_type == 'W_NoSqr':
         total_dvrg = torch.sqrt(total_dvrg)
 
     return total_dvrg
@@ -159,15 +159,15 @@ def  get_dvrg_element(post, prior, prm, noised_prior=False):
     post_std = torch.exp(0.5 * post['log_var'])
     prior_std = torch.exp(0.5 * prior_log_var)
 
-    if  prm.divergence_type in ['W_Sqr', 'W_NoSqr']:
-            # Wasserstein norm with p=2
-            # according to DOWSON & LANDAU 1982
-            div_elem = torch.sum((post['mean'] - prior_mean).pow(2) + (post_std - prior_std).pow(2))
-
-    elif prm.divergence_type == 'KL':
+    if not hasattr(prm, 'divergence_type') or prm.divergence_type == 'KL':
         numerator = (post['mean'] - prior_mean).pow(2) + post_var
         denominator = prior_var
         div_elem = 0.5 * torch.sum(prior_log_var - post['log_var'] + numerator / denominator - 1)
+
+    elif prm.divergence_type in ['W_Sqr', 'W_NoSqr']:
+        # Wasserstein norm with p=2
+        # according to DOWSON & LANDAU 1982
+        div_elem = torch.sum((post['mean'] - prior_mean).pow(2) + (post_std - prior_std).pow(2))
     else:
         raise ValueError('Invalid prm.divergence_type')
 

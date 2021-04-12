@@ -11,9 +11,7 @@ parser.add_argument('--complexity_type', type=str,
 # 'NoComplexity' /  'Variational_Bayes' / 'PAC_Bayes_Pentina'   McAllester / Seeger'"
 
 args = parser.parse_args()
-
 complexity_type = args.complexity_type
-
 
 call(['python', 'main_Meta_Bayes.py',
       '--run-name', 'PermutedLabels_{}_Tasks_{}_Comp'.format(n_train_tasks, complexity_type),
@@ -30,4 +28,3 @@ call(['python', 'main_Meta_Bayes.py',
       '--n_test_tasks', '20',
       '--meta_batch_size', '5',
       ])
-

@@ -116,7 +116,7 @@ class Task_Generator(object):
             train_dataset = reduce_train_set(train_dataset, limit_train_samples)
 
         # Create data loaders:
-        kwargs = {'num_workers': 4, 'pin_memory': True}
+        kwargs = {'num_workers': 0}
 
         train_loader = data_utils.DataLoader(train_dataset, batch_size=prm.batch_size, shuffle=True, **kwargs)
         test_loader = data_utils.DataLoader(test_dataset, batch_size=prm.test_batch_size, shuffle=True, **kwargs)
