@@ -26,5 +26,5 @@ call(['python', 'main_Meta_Bayes.py',
       '--n_meta_train_epochs', '150',
       '--n_meta_test_epochs', '200',
       '--n_test_tasks', '20',
-      '--meta_batch_size', '5',
+      '--meta_batch_size', '5',  # 16, note that 'Variational_Bayes' and 'Seeger' still work with meta_batch_size=5
       ])
