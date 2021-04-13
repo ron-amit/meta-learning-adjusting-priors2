@@ -10,6 +10,12 @@ from Utils import omniglot
 from Utils import imagenet_data
 import multiprocessing
 
+
+def worker_init_fn(worker_id):
+    # https://tanelp.github.io/posts/a-bug-that-plagues-thousands-of-open-source-ml-projects/
+    np.random.seed(np.random.get_state()[1][0] + worker_id)
+
+
 # -------------------------------------------------------------------------------------------
 #  Task generator class
 # -------------------------------------------------------------------------------------------
@@ -116,7 +122,7 @@ class Task_Generator(object):
             train_dataset = reduce_train_set(train_dataset, limit_train_samples)
 
         # Create data loaders:
-        kwargs = {'num_workers': 0}
+        kwargs = {'num_workers': 0, 'worker_init_fn':worker_init_fn}
 
         train_loader = data_utils.DataLoader(train_dataset, batch_size=prm.batch_size, shuffle=True, **kwargs)
         test_loader = data_utils.DataLoader(test_dataset, batch_size=prm.test_batch_size, shuffle=True, **kwargs)
